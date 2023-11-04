@@ -29,16 +29,15 @@ export const useAuthStore = defineStore('auth', {
       if (email === "admin@admin.lv" && password === "password") {
         localStorage.IsLoggedIn = true;
         this.IsLoggedIn = true;
-        router.push("/").then(r => console.log(r) );
+        router.push("/");
       }
     },
     logout() {
       localStorage.clear();
       this.IsLoggedIn = false;
-      router.push("/login").then(r => console.log(r) );
+      router.push("/login");
     },
     toggleFavorite(songID) {
-      console.log(this.user.liked_songs);
       const song_index = this.user.liked_songs.indexOf(songID);
 
       if (song_index < 0) {
