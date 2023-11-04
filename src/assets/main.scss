@@ -183,7 +183,10 @@
 }
 //
 
-// SONGS VIEW
+
+  .not-favorite {
+    color: red; }
+
 #songs-view {
     .wrapper-header {
         padding    : 1rem 2rem;

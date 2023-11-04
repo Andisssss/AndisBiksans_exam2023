@@ -1,8 +1,10 @@
 <script>
-import { auth } from '../stores/auth'
+import { useAuthStore } from '../stores/auth';
+
 
 export default {
   data() {
+    const auth = useAuthStore();
     return {
       routes: [
         {
@@ -23,9 +25,8 @@ export default {
   }
 }
 </script>
-
 <template>
-  <nav id="main-navigaton" v-if="auth.isLogged" class="wrapper-navigation">
+  <nav id="nav-main" v-if="auth.IsLoggedIn" class="wrapper-navigation">
     <ol>
       <li v-for="(link, index) in routes" :key="index">
         <router-link :to="link.path">{{ link.name }}</router-link>
@@ -34,7 +35,8 @@ export default {
   </nav>
 </template>
 
-<style >
+
+<style>
 #navigaton {
   padding: 1rem;
   background: #4609a3;

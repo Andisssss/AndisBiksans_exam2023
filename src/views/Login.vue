@@ -1,8 +1,9 @@
 <script>
-import { auth } from '../stores/auth'
+import { useAuthStore } from '../stores/auth';
 
 export default {
   data() {
+    const auth = useAuthStore();
     return {
       auth,
       user_form: {
@@ -13,7 +14,7 @@ export default {
   },
   computed: {
     disabled() {
-      return this.user_form.email.trim().length == 0 || this.user_form.password.trim().length < 6
+      return this.user_form.email.trim().length === 0 || this.user_form.password.trim().length < 4;
     }
   }
 }
@@ -28,15 +29,11 @@ export default {
       </div>
       <input placeholder="E-mail" v-model="user_form.email" />
       <input type="password" placeholder="Password" v-model="user_form.password" />
-      <button
-        type="submit"
-        :disabled="disabled"
-        @click="auth.login(user_form.email, user_form.password)"
-      >
-        LOGIN
-      </button>
+      <button type="submit" :disabled="disabled" @click="auth.login(user_form.email, user_form.password)">LOGIN</button>
     </form>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+</style>

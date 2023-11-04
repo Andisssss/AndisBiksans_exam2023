@@ -1,16 +1,17 @@
 <script>
-import { auth } from '../stores/auth';
+import { useAuthStore } from '../stores/auth';
 
 export default {
     data() {
+        const auth = useAuthStore();
         return {
             auth
         }
     },
     computed: {
         full_name() {
-            return `${auth.user.name} ${auth.user.surname}`;
-        }
+      return `${this.auth.user.name} ${this.auth.user.surname}`;
+    }
       },
         methods: {
         getRandomColor() {
@@ -28,7 +29,7 @@ export default {
 <template>
     <div id="main-header" class="active">
         <div class="wrapper-logo">
-            <img src="@/assets/logo.svg"/>
+            <img src="../assets/logo.svg"/>
             <h2>KRAKEN.FM</h2>
         </div>
         <div class="wrapper-profile">

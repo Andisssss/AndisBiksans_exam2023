@@ -1,32 +1,36 @@
 <script>
-import { auth } from '../stores/auth'
+import { useAuthStore } from '../stores/auth';
 import songsAPI from '../data/songs'
 import IconEdit from '../components/icons/IconEdit.vue'
 
 export default {
   components: { IconEdit },
   data() {
+    const auth = useAuthStore();
     return {
       auth,
+      edit_form: false,
       user_form: {
-        name: auth.user.name,
+        name   : auth.user.name,
         surname: auth.user.surname,
-        code: auth.user.code
-      },
-      edit_form: false
+        code   : auth.user.code
+      }
     }
   },
   methods: {
+    getArtists(artists) {
+      return artists.map(artist => artist.name).join(", ");
+    },
     changeStats() {
-      auth.setUserData(this.user_form.name, this.user_form.surname, this.user_form.code)
-      this.edit_form = false
+      this.auth.setUserData(this.user_form.name, this.user_form.surname, this.user_form.code);
+      this.edit_form = false;
     }
   },
   computed: {
     favorite_songs() {
-      return auth.getFavoriteSongs().map((songID) => {
-        return songsAPI.find((song) => song.id == songID)
-      })
+      return this.auth.getFavoriteSongs.map(songID => {
+        return songsAPI.find(song => song.id === songID);
+      });
     }
   }
 }

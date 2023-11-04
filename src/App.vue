@@ -1,42 +1,32 @@
 <template>
-    <!--  HEADER  -->
-    <Header></Header>
-    <!--  HEADER END  -->
-
-    <!--  BODY  -->
+    <Header v-if="auth.loggedIn"></Header>
     <div id="section-body">
-        <nav id="nav-main" class="wrapper-navigation">
-            <ol>
-                <li>
-                    <a href="/">SONGS</a>
-                </li>
-                <li>
-                    <a href="/albums">ALBUMS</a>
-                </li>
-                <li>
-                    <a href="/about">ABOUT</a>
-                </li>
-            </ol>
-        </nav>
-        <router-view class="section-router"></router-view>
+      <Navigation v-if="auth.loggedIn"></Navigation>
+      <router-view class="section-router"></router-view>
     </div>
-    <!--  BODY END  -->
-
-    <!--  PLAYER  -->
     <div id="section-player">
-        <AudioPlayer />
+      <AudioPlayer v-if="auth.loggedIn"></AudioPlayer>
     </div>
-    <!--  PLAYER END  -->
-</template>
-
-<script>
-    import Header from '@/components/HeaderComponent.vue';
-    import AudioPlayer from '@/components/AudioPlayerComponent.vue';
-
-    export default {
-        components: {
-            Header,
-            AudioPlayer
-        }
+  </template>
+  
+  <script>
+  import Header from './components/HeaderComponent.vue';
+  import AudioPlayer from './components/AudioPlayerComponent.vue';
+  import Navigation from './components/NavigationComponent.vue'
+  import { useAuthStore } from './stores/auth';
+  
+  export default {
+    data() {
+      const auth = useAuthStore();
+      return {
+        auth
+      }
+    },
+    components: {
+      Header,
+      Navigation,
+      AudioPlayer
     }
-</script>
+  }
+  </script>
+  
