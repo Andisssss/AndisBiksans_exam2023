@@ -46,28 +46,30 @@ export default {
     toggleView(isGrid) {
       this.is_grid = isGrid;
     },
-    organizeSongsIntoAlbums(songs) {
-      return songs.reduce((accumulator, currentSong) => {
-        const albumID = currentSong.album.id;
-        if (!accumulator[albumID]) {
-          accumulator[albumID] = { ...currentSong.album, tracks: [] };
-        }
-        accumulator[albumID].tracks.push(currentSong);
-        return accumulator;
-      }, {});
-    },
+    songsToAlb(songs) {
+  return songs.reduce((accumulator, currentSong) => {
+    const { album } = currentSong;
+    const albumID = album.id;
+    if (!accumulator[albumID]) {
+      accumulator[albumID] = { ...album, tracks: [] };
+    }
+    accumulator[albumID].tracks.push(currentSong);
+    return accumulator;
+  }, {});
+},
     getAlbumArtists(artists) {
       return artists.map(artist => artist.name).join(', ');
     },
     getAlbumYear(date) {
       return new Date(date).getFullYear();
     },
+    isAlbumActive(album) {
+      return this.store.getNowPlayingAlbumID === album.id;
+    },
     selectAlbum(albumID) {
       this.clicks++;
       if (this.clicks === 1) {
-        const timer = setTimeout(() => {
-          this.clicks = 0;
-        }, 500);
+        setTimeout(() => (this.clicks = 0), 500);
       } else {
         clearTimeout(this.timer);
         const album = this.albums[albumID];
@@ -76,9 +78,6 @@ export default {
         this.clicks = 0;
       }
     },
-    isAlbumActive(album) {
-      return this.store.getNowPlayingAlbumID === album.id;
-    },
     getTrackCountText(album) {
       const trackCount = album.tracks.length;
       return `${trackCount} ${trackCount > 1 ? 'songs' : 'song'}`;
@@ -86,7 +85,7 @@ export default {
   },
   computed: {
     albums() {
-      return this.organizeSongsIntoAlbums(songList);
+      return this.songsToAlb(songList);
     },
   },
 };

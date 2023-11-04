@@ -1,9 +1,11 @@
 <template>
     <Header v-if="auth.loggedIn"></Header>
+    
     <div id="section-body">
       <Navigation v-if="auth.loggedIn"></Navigation>
       <router-view class="section-router"></router-view>
     </div>
+
     <div id="section-player">
       <AudioPlayer v-if="auth.loggedIn"></AudioPlayer>
     </div>

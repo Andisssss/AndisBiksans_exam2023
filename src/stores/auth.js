@@ -7,7 +7,7 @@ export const useAuthStore = defineStore('auth', {
       name: "Andis",
       surname: "Biksans",
       code: "IT21036",
-      liked_songs: localStorage.liked_songs ? localStorage.liked_songs.split(",") : []
+      favourite_songs: localStorage.favourite_songs ? localStorage.favourite_songs.split(",") : []
     },
     IsLoggedIn: localStorage.IsLoggedIn ?? false
   }),
@@ -16,7 +16,7 @@ export const useAuthStore = defineStore('auth', {
       return this.IsLoggedIn;
     },
     getFavoriteSongs() {
-      return this.user.liked_songs;
+      return this.user.favourite_songs;
     }
   },
   actions: {
@@ -38,14 +38,14 @@ export const useAuthStore = defineStore('auth', {
       router.push("/login");
     },
     toggleFavorite(songID) {
-      const song_index = this.user.liked_songs.indexOf(songID);
+      const song_index = this.user.favourite_songs.indexOf(songID);
 
       if (song_index < 0) {
-        this.user.liked_songs.push(songID);
+        this.user.favourite_songs.push(songID);
       } else {
-        this.user.liked_songs.splice(song_index, 1);
+        this.user.favourite_songs.splice(song_index, 1);
       }
-      localStorage.liked_songs = this.user.liked_songs;
+      localStorage.favourite_songs = this.user.favourite_songs;
     },
   },
 
